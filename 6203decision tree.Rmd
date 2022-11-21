@@ -1,0 +1,48 @@
+---
+title: "6203 group project"
+author: "YUKUN LIU903852507"
+date: "2022-10-28"
+output: html_document
+---
+
+```{r}
+data <- read.csv('C:/Users/莹莹/Documents/features.csv',header=T,sep=",")
+
+data[is.na(data)] <- 0#replace na with 0
+nn=0.8#set the percentage of the training data
+sub<-sample(1:nrow(data),round(nrow(data)*nn))
+data_train<-data[sub,]#set train set
+data_test<-data[-sub,]#set test set
+train_y=data_train[,3]
+train_x=data_train[,-3]
+dim(data_train)
+dim(data_test)
+
+library(rpart)
+decision_tree<-rpart(as.factor(train_y)~ .,data=data_train,method='class')#fit the model
+summary(decision_tree)
+importance=decision_tree$variable.importance
+
+#make predicton
+library(pROC)
+pred.tree<-predict(decision_tree,newdata=data_test)
+predictScore<-data.frame(pred.tree)
+predictScore
+summary(predictScore)
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+
+```{r}
+
+```{r}
